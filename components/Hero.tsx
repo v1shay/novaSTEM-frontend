@@ -37,7 +37,7 @@ export function Hero() {
           NovaSTEM
         </h1>
         <p className="text-xl md:text-2xl text-white/70 font-light tracking-[0.4em] uppercase mt-12">
-          The next generation of STEM builders.
+          The next generation of STEM builders
         </p>
       </motion.div>
 

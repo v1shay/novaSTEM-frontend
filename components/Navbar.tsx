@@ -13,11 +13,11 @@ const navLinks = [
 
 export function Navbar() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-zinc-50/95 backdrop-blur-md border-b border-zinc-200/50 px-6 py-4">
+    <nav className="fixed top-0 left-0 right-0 z-50 glass-morphism px-6 py-4">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Sparkles className="w-6 h-6 text-slate-900" />
-          <span className="text-xl font-bold tracking-tight text-slate-900">NovaSTEM</span>
+          <Sparkles className="w-6 h-6 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
+          <span className="text-xl font-bold tracking-tight text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">NovaSTEM</span>
         </div>
 
         <div className="hidden md:flex items-center gap-8">
@@ -25,7 +25,7 @@ export function Navbar() {
             <Link
               key={link.name}
               href={link.href}
-              className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+              className="text-sm font-medium text-white/80 hover:text-white transition-all hover:scale-105 duration-200"
             >
               {link.name}
             </Link>
