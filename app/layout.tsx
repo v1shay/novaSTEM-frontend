@@ -13,7 +13,7 @@ const BackgroundShader = dynamic(
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Nova Stem - Production Ready",
+  title: "NovaSTEM",
   description: "FAANG-level production-ready frontend foundation for Nova Stem",
 }
 
