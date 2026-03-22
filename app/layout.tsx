@@ -1,9 +1,14 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
-import { BackgroundShader } from "@/components/BackgroundShader"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Navbar } from "@/components/Navbar"
+import dynamic from "next/dynamic"
+
+const BackgroundShader = dynamic(
+  () => import("@/components/BackgroundShader").then((mod) => mod.BackgroundShader),
+  { ssr: false }
+)
 
 const inter = Inter({ subsets: ["latin"] })
 

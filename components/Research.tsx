@@ -27,7 +27,7 @@ const researchItems = [
 export function Research() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-32 space-y-16 lg:space-y-24">
-      {researchItems.map((item, idx) => (
+      {researchItems.map((item) => (
         <motion.div
           key={item.title}
           initial={{ opacity: 0, x: item.alignment === "right" ? 50 : -50 }}
