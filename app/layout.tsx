@@ -15,6 +15,9 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "NovaSTEM",
   description: "FAANG-level production-ready frontend foundation for Nova Stem",
+  icons: {
+    icon: "/images/novastem-logo.png",
+  },
 }
 
 export default function RootLayout({
