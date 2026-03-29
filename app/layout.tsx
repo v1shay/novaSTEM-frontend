@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Inter, Syne } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Navbar } from "@/components/Navbar"
@@ -10,7 +10,8 @@ const BackgroundShader = dynamic(
   { ssr: false }
 )
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
+const syne = Syne({ subsets: ["latin"], weight: ["700", "800"], variable: "--font-syne" })
 
 export const metadata: Metadata = {
   title: "NovaSTEM",
@@ -27,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="dark">
-      <body className={inter.className}>
+      <body className={`${inter.variable} ${syne.variable} ${inter.className}`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

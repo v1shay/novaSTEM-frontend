@@ -54,7 +54,13 @@ export function Gallery() {
         NovaSTEM Gallery
       </motion.h2>
 
-      <div className="w-full flex flex-col gap-8 px-4">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.8, y: 150, z: -300 }}
+        whileInView={{ opacity: 1, scale: 1, y: 0, z: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full flex flex-col gap-8 px-4 preserve-3d"
+      >
         {/* Row 1 - Moves Left */}
         <MarqueeRow images={row1} direction="left" speed={28} />
 
@@ -63,7 +69,7 @@ export function Gallery() {
 
         {/* Row 3 - Moves Left (Slower) */}
         <MarqueeRow images={row3} direction="left" speed={38} />
-      </div>
+      </motion.div>
 
       <div className="pt-20 text-[10px] uppercase tracking-[1.5em] text-white/10 font-bold animate-pulse">
 
