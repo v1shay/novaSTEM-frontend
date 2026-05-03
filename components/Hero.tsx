@@ -123,7 +123,7 @@ export function Hero() {
           </p>
 
           <div className="flex flex-wrap justify-center items-center gap-6 md:gap-12 lg:gap-20">
-            {partners.map((partner, idx) => (
+            {partners.map((partner) => (
               <motion.div
                 key={partner.src}
                 whileHover={{ scale: 1.05 }}
