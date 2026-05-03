@@ -15,9 +15,9 @@ export function BackgroundShader() {
           cAzimuthAngle={180}
           cDistance={3.9}
           cPolarAngle={115}
-          color1="#008b00"
-          color2="#c1d3b8"
-          color3="#6dcd8b"
+          color1="#e8f5ec"
+          color2="#c8e4d1"
+          color3="#a9d4b8"
           envPreset="city"
           grain="off" // Toggle grain here: "on" or "off"
           lightType="3d"

@@ -37,10 +37,10 @@ export function Research() {
           className={`flex flex-col ${item.alignment === "right" ? "lg:flex-row" : "lg:flex-row-reverse"} items-center gap-12 lg:gap-20 preserve-3d transform-gpu`}
         >
           <div className="flex-1 space-y-6 transform-gpu" style={{ transform: "translateZ(80px)" }}>
-            <h3 className="font-display text-5xl lg:text-7xl font-extrabold text-white tracking-tight drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">
+            <h3 className="font-display text-5xl lg:text-7xl font-extrabold text-emerald-950 tracking-tight drop-shadow-sm">
               {item.title}
             </h3>
-            <p className="text-2xl text-white/60 leading-relaxed font-light transform-gpu" style={{ transform: "translateZ(30px)" }}>
+            <p className="text-2xl text-emerald-900/80 leading-relaxed font-medium transform-gpu" style={{ transform: "translateZ(30px)" }}>
               {item.description}
             </p>
           </div>
