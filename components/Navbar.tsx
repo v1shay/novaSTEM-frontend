@@ -19,7 +19,7 @@ export function Navbar() {
           <div className="relative w-10 h-10 md:w-12 md:h-12">
             <Image src="/images/brain.png" alt="Brain Icon" fill className="object-contain drop-shadow-sm" />
           </div>
-          <span className="text-2xl font-bold tracking-tight text-emerald-950">NovaSTEM</span>
+          <span className="text-2xl font-bold tracking-tight text-emerald-900">NovaSTEM</span>
         </div>
 
         <div className="hidden md:flex items-center gap-8">
@@ -27,7 +27,7 @@ export function Navbar() {
             <Link
               key={link.name}
               href={link.href}
-              className="text-sm font-medium text-emerald-900/70 hover:text-emerald-950 transition-all hover:scale-105 duration-200"
+              className="text-sm font-medium text-emerald-900/70 hover:text-emerald-900 transition-all hover:scale-105 duration-200"
             >
               {link.name}
             </Link>

@@ -36,7 +36,7 @@ export function Hero() {
               className="mb-4 relative h-20 w-[160px] md:h-28 md:w-[220px] lg:h-36 lg:w-[280px]"
             >
               <Image
-                src="/images/novastem-logo.png"
+                src="/partners/novastem-logo.png"
                 alt="NovaSTEM Logo"
                 fill
                 className="object-contain object-left drop-shadow-sm"
@@ -78,7 +78,7 @@ export function Hero() {
                   { label: "Locally Funded", value: "0$ Workshops" }
                 ].map((stat, i) => (
                   <div key={i} className="px-4 py-2 rounded-xl bg-emerald-900/5 border border-emerald-900/10 backdrop-blur-md flex flex-col items-start justify-center shadow-sm">
-                    <span className="text-emerald-950 font-black text-lg md:text-xl leading-none">{stat.value}</span>
+                    <span className="text-emerald-900 font-black text-lg md:text-xl leading-none">{stat.value}</span>
                     <span className="text-emerald-900/50 text-[9px] md:text-[10px] uppercase tracking-widest mt-1 font-bold">{stat.label}</span>
                   </div>
                 ))}

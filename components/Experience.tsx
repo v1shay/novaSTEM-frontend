@@ -35,7 +35,7 @@ export function Experience() {
         <div className="relative w-8 h-8">
           <Image src="/images/brain.png" alt="Brain" fill className="object-contain" />
         </div>
-        <h2 className="text-xl md:text-2xl font-bold tracking-[0.2em] text-emerald-950 uppercase drop-shadow-sm">
+        <h2 className="text-xl md:text-2xl font-bold tracking-[0.2em] text-emerald-900 uppercase drop-shadow-sm">
           Featured Programs
         </h2>
       </motion.div>
@@ -62,7 +62,7 @@ export function Experience() {
               <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/40 to-transparent pointer-none opacity-90" />
             </div>
             <div className="p-10 relative z-10 space-y-4 transform-gpu" style={{ transform: "translateZ(30px)" }}>
-              <h3 className="text-4xl lg:text-5xl font-extrabold text-emerald-950 uppercase tracking-tighter">
+              <h3 className="text-4xl lg:text-5xl font-extrabold text-emerald-900 uppercase tracking-tighter">
                 {pillar.title}
               </h3>
               <p className="text-emerald-900/80 text-sm leading-relaxed tracking-wider font-medium">

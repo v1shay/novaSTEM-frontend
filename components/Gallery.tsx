@@ -98,7 +98,7 @@ export function Gallery() {
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="text-4xl md:text-6xl font-black text-emerald-950 uppercase tracking-[0.2em] mb-12 text-center"
+        className="text-4xl md:text-6xl font-black text-emerald-900 uppercase tracking-[0.2em] mb-12 text-center"
       >
         Event Gallery
       </motion.h2>
@@ -107,12 +107,13 @@ export function Gallery() {
         {sessions.map((session, idx) => (
           <motion.div
             key={session.id}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: idx * 0.1 }}
+            initial={{ opacity: 0, y: 30, z: -100, rotateX: 15 }}
+            whileInView={{ opacity: 1, y: 0, z: 0, rotateX: 0 }}
+            whileHover={{ scale: 1.03, rotateY: idx % 2 === 0 ? 5 : -5, rotateX: -5, z: 30, transition: { duration: 0.3 } }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 1, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
             onClick={() => setActiveSession(session)}
-            className="group relative h-[60vh] lg:h-[70vh] rounded-3xl overflow-hidden cursor-pointer shadow-xl border border-white/10"
+            className="group relative h-[60vh] lg:h-[70vh] rounded-3xl overflow-hidden cursor-pointer shadow-xl border border-emerald-900/10 preserve-3d"
           >
             <Image
               src={session.cover}
@@ -122,8 +123,8 @@ export function Gallery() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
             
-            <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col gap-2 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-              <h3 className="text-2xl md:text-3xl font-bold text-emerald-950 leading-tight">{session.name}</h3>
+            <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col gap-2 transform-gpu translate-y-2 group-hover:translate-y-0 transition-all duration-300" style={{ transform: "translateZ(30px)" }}>
+              <h3 className="text-2xl md:text-3xl font-bold text-emerald-900 leading-tight">{session.name}</h3>
               <div className="flex items-center gap-2 text-emerald-900/80 text-sm md:text-base font-medium">
                 <Calendar className="w-4 h-4" />
                 <span>{session.date}</span>
@@ -149,7 +150,7 @@ export function Gallery() {
             {/* Modal Header */}
             <div className="sticky top-0 z-[110] flex justify-between items-start p-6 bg-gradient-to-b from-white/95 to-transparent">
               <div className="flex flex-col">
-                <h2 className="text-3xl md:text-5xl font-black text-emerald-950 tracking-tight uppercase">{activeSession.name}</h2>
+                <h2 className="text-3xl md:text-5xl font-black text-emerald-900 tracking-tight uppercase">{activeSession.name}</h2>
                 <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6 mt-2 text-emerald-900/80 text-sm md:text-base font-bold">
                   <span className="flex items-center gap-2"><Calendar className="w-5 h-5" /> {activeSession.date}</span>
                   <span className="flex items-center gap-2"><MapPin className="w-5 h-5" /> {activeSession.location}</span>
@@ -157,7 +158,7 @@ export function Gallery() {
               </div>
               <button
                 onClick={() => setActiveSession(null)}
-                className="p-4 bg-emerald-900/10 hover:bg-emerald-900/20 hover:scale-110 rounded-full transition-all text-emerald-950 backdrop-blur-md shadow-lg fixed top-6 right-6"
+                className="p-4 bg-emerald-900/10 hover:bg-emerald-900/20 hover:scale-110 rounded-full transition-all text-emerald-900 backdrop-blur-md shadow-lg fixed top-6 right-6"
               >
                 <X className="w-8 h-8" />
               </button>

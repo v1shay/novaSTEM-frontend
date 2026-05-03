@@ -16,7 +16,7 @@ export function Bio() {
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-7xl font-black text-emerald-950 uppercase tracking-tighter mb-16 drop-shadow-sm"
+        className="text-7xl font-black text-emerald-900 uppercase tracking-tighter mb-16 drop-shadow-sm"
       >
         Vishay Agarwal
       </motion.h2>
@@ -66,7 +66,7 @@ export function Bio() {
                 transition={{ duration: 1, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 className="liquid-glass p-6 text-center space-y-1 preserve-3d bg-white/30 border border-emerald-900/10 shadow-lg"
               >
-                <div className="text-2xl font-bold text-emerald-950 tracking-widest transform-gpu" style={{ transform: "translateZ(20px)" }}>{stat.value}</div>
+                <div className="text-2xl font-bold text-emerald-900 tracking-widest transform-gpu" style={{ transform: "translateZ(20px)" }}>{stat.value}</div>
                 <div className="text-[10px] uppercase font-bold text-emerald-900/60 tracking-[0.2em] transform-gpu" style={{ transform: "translateZ(10px)" }}>
                   {stat.label}
                 </div>
@@ -82,13 +82,13 @@ export function Bio() {
             className="flex gap-8 pt-12 text-emerald-900/60 self-start preserve-3d"
           >
             <motion.a whileHover={{ scale: 1.2, z: 20, rotateZ: 5 }} href="mailto:v.agrwl17@gmail.com" target="_blank" rel="noopener noreferrer">
-              <Mail className="w-8 h-8 hover:text-emerald-950 transition-colors cursor-pointer animate-in fade-in duration-500" />
+              <Mail className="w-8 h-8 hover:text-emerald-900 transition-colors cursor-pointer animate-in fade-in duration-500" />
             </motion.a>
             <motion.a whileHover={{ scale: 1.2, z: 20, rotateZ: -5 }} href="https://docs.google.com/document/d/17_go6arOIviQ2X_M8XTwY88k7OC9EA-g/edit" target="_blank" rel="noopener noreferrer">
-              <FileText className="w-8 h-8 hover:text-emerald-950 transition-colors cursor-pointer animate-in fade-in duration-700" />
+              <FileText className="w-8 h-8 hover:text-emerald-900 transition-colors cursor-pointer animate-in fade-in duration-700" />
             </motion.a>
             <motion.a whileHover={{ scale: 1.2, z: 20, rotateZ: 5 }} href="https://vishayagarwal.vercel.app" target="_blank" rel="noopener noreferrer">
-              <Globe className="w-8 h-8 hover:text-emerald-950 transition-colors cursor-pointer animate-in fade-in duration-1000" />
+              <Globe className="w-8 h-8 hover:text-emerald-900 transition-colors cursor-pointer animate-in fade-in duration-1000" />
             </motion.a>
           </motion.div>
         </motion.div>

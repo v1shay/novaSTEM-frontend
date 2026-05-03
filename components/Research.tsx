@@ -32,12 +32,12 @@ export function Research() {
           key={item.title}
           initial={{ opacity: 0, x: item.alignment === "right" ? 150 : -150, z: -500, rotateY: item.alignment === "right" ? 45 : -45, scale: 0.8, filter: "blur(10px)" }}
           whileInView={{ opacity: 1, x: 0, z: 0, rotateY: 0, scale: 1, filter: "blur(0px)" }}
-          viewport={{ once: false, margin: "-150px" }}
-          transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1], delay: 0.4 + idx * 0.15 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1], delay: 0.2 + idx * 0.15 }}
           className={`flex flex-col ${item.alignment === "right" ? "lg:flex-row" : "lg:flex-row-reverse"} items-center gap-12 lg:gap-20 preserve-3d transform-gpu`}
         >
           <div className="flex-1 space-y-6 transform-gpu" style={{ transform: "translateZ(80px)" }}>
-            <h3 className="font-display text-5xl lg:text-7xl font-extrabold text-emerald-950 tracking-tight drop-shadow-sm">
+            <h3 className="font-display text-5xl lg:text-7xl font-extrabold text-emerald-900 tracking-tight drop-shadow-sm">
               {item.title}
             </h3>
             <p className="text-2xl text-emerald-900/80 leading-relaxed font-medium transform-gpu" style={{ transform: "translateZ(30px)" }}>
