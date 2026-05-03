@@ -32,7 +32,7 @@ export function Research() {
           key={item.title}
           initial={{ opacity: 0, x: item.alignment === "right" ? 150 : -150, z: -500, rotateY: item.alignment === "right" ? 45 : -45, scale: 0.8, filter: "blur(10px)" }}
           whileInView={{ opacity: 1, x: 0, z: 0, rotateY: 0, scale: 1, filter: "blur(0px)" }}
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1], delay: 0.2 + idx * 0.15 }}
           className={`flex flex-col ${item.alignment === "right" ? "lg:flex-row" : "lg:flex-row-reverse"} items-center gap-12 lg:gap-20 preserve-3d transform-gpu`}
         >

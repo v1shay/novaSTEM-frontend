@@ -11,10 +11,11 @@ const summary = [
 
 export function Bio() {
   return (
-    <div className="max-w-7xl mx-auto px-4 py-32 flex flex-col items-start justify-center min-h-screen">
+    <div className="max-w-7xl mx-auto px-4 pb-32 flex flex-col items-start justify-start min-h-screen">
       <motion.h2
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.6 }}
         className="text-7xl font-black text-emerald-900 uppercase tracking-tighter mb-16 drop-shadow-sm"
       >
@@ -26,7 +27,7 @@ export function Bio() {
           initial={{ opacity: 0, scale: 0.95, y: 50, rotateX: 10, rotateY: -10, filter: "blur(8px)" }}
           whileInView={{ opacity: 1, scale: 1, y: 0, rotateX: 0, rotateY: 0, filter: "blur(0px)" }}
           whileHover={{ scale: 1.02, rotateY: -5, rotateX: 2, z: 20, transition: { duration: 0.4 } }}
-          viewport={{ once: true, margin: "-50px" }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
           className="relative aspect-square w-full lg:w-96 liquid-glass p-0 overflow-hidden ring-1 ring-emerald-900/10 preserve-3d transform-gpu shadow-xl group bg-white/50"
         >
@@ -43,7 +44,7 @@ export function Bio() {
         <motion.div 
           initial={{ opacity: 0, x: 50, z: -100 }}
           whileInView={{ opacity: 1, x: 0, z: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
           className="flex-1 space-y-8 flex flex-col justify-center preserve-3d perspective"
         >
