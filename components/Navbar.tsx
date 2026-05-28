@@ -6,9 +6,9 @@ import Image from "next/image"
 const navLinks = [
   { name: "Home", href: "#section-1" },
   { name: "Approach", href: "#section-2" },
-  { name: "Get Involved", href: "#section-5" },
   { name: "Curriculum", href: "#section-3" },
   { name: "In Action", href: "#section-4" },
+  { name: "Get Involved", href: "#section-5" },
 ]
 
 export function Navbar() {
@@ -21,12 +21,13 @@ export function Navbar() {
           </div>
           <span className="text-2xl font-bold tracking-tight text-emerald-900">NovaSTEM</span>
         </div>
-        <div className="flex w-full justify-between items-center gap-4 flex-nowrap">
+
+        <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className="flex-1 text-center text-sm font-medium text-emerald-900/70 hover:text-emerald-900 transition-all hover:scale-105 duration-200"
+              className="text-sm font-medium text-emerald-900/70 hover:text-emerald-900 transition-all hover:scale-105 duration-200"
             >
               {link.name}
             </Link>

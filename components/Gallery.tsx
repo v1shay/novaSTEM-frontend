@@ -184,7 +184,6 @@ export function Gallery() {
 
               const isActive = position === 0
               const isImmediateSide = Math.abs(position) === 1
-              const isFarSide = Math.abs(position) === 2
               const isVisible = Math.abs(position) <= 2
 
               if (!isVisible) return null
