@@ -139,7 +139,7 @@ export function Gallery() {
     if (isHovered) return
     const timer = setInterval(() => {
       nextSlide()
-    }, 4000)
+    }, 3500) // Slightly faster rotation
     return () => clearInterval(timer)
   }, [nextSlide, isHovered])
 
@@ -162,18 +162,18 @@ export function Gallery() {
         {/* Navigation Buttons */}
         <button 
           onClick={prevSlide}
-          className="absolute left-4 z-50 p-4 bg-white/20 hover:bg-white/40 backdrop-blur-md rounded-full text-emerald-900 transition-all shadow-lg"
+          className="absolute left-8 z-50 p-4 bg-white/20 hover:bg-white/40 backdrop-blur-md rounded-full text-emerald-900 transition-all shadow-xl"
         >
           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" /></svg>
         </button>
         <button 
           onClick={nextSlide}
-          className="absolute right-4 z-50 p-4 bg-white/20 hover:bg-white/40 backdrop-blur-md rounded-full text-emerald-900 transition-all shadow-lg"
+          className="absolute right-8 z-50 p-4 bg-white/20 hover:bg-white/40 backdrop-blur-md rounded-full text-emerald-900 transition-all shadow-xl"
         >
           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" /></svg>
         </button>
 
-        <div className="flex items-center justify-center w-full h-full relative perspective-1000">
+        <div className="flex items-center justify-center w-full h-full relative perspective-2000">
           <AnimatePresence initial={false}>
             {displaySessions.map((session, idx) => {
               let position = idx - currentIndex
@@ -181,7 +181,8 @@ export function Gallery() {
               if (position < -2) position += displaySessions.length
 
               const isActive = position === 0
-              const isNearCenter = Math.abs(position) <= 1
+              const isImmediateSide = Math.abs(position) === 1
+              const isFarSide = Math.abs(position) === 2
               const isVisible = Math.abs(position) <= 2
 
               if (!isVisible) return null
@@ -191,15 +192,15 @@ export function Gallery() {
                   key={session.id}
                   initial={false}
                   animate={{
-                    x: `${position * 33}%`,
-                    scale: isActive ? 1.05 : 0.85,
+                    x: `${position * 38}%`, // Increased spread
+                    scale: isActive ? 1.05 : isImmediateSide ? 0.85 : 0.7,
                     zIndex: isActive ? 40 : 30 - Math.abs(position),
                     opacity: isVisible ? 1 : 0,
-                    filter: isNearCenter ? "blur(0px)" : "blur(6px) grayscale(40%)",
+                    filter: isActive ? "blur(0px)" : isImmediateSide ? "blur(3px) grayscale(20%)" : "blur(8px) grayscale(60%)",
                   }}
-                  transition={{ type: "spring", stiffness: 200, damping: 25 }}
+                  transition={{ type: "spring", stiffness: 150, damping: 20 }}
                   onClick={() => isActive ? setActiveSession(session) : setCurrentIndex(idx)}
-                  className={`absolute w-[30%] h-full rounded-3xl overflow-hidden cursor-pointer shadow-2xl border border-emerald-900/10 preserve-3d group`}
+                  className="absolute w-[28%] h-full rounded-3xl overflow-hidden cursor-pointer shadow-2xl border border-emerald-900/10 preserve-3d group"
                 >
                   <Image
                     src={session.cover}
@@ -207,20 +208,34 @@ export function Gallery() {
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />
+                  {/* Tint overlay for non-active items */}
                   {!isActive && (
-                    <div className="absolute inset-0 bg-emerald-950/30 z-10 transition-opacity duration-500" />
+                    <div 
+                      className="absolute inset-0 z-10 transition-opacity duration-500" 
+                      style={{ 
+                        backgroundColor: isImmediateSide ? 'rgba(6, 78, 59, 0.2)' : 'rgba(6, 78, 59, 0.5)' 
+                      }}
+                    />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300 z-20" />
-                  <div className="absolute bottom-0 left-0 right-0 p-8 flex flex-col gap-2 transform-gpu translate-y-2 group-hover:translate-y-0 transition-all duration-300 z-30" style={{ transform: "translateZ(50px)" }}>
-                    <h3 className={`font-bold text-emerald-900 leading-tight ${isActive ? 'text-2xl md:text-3xl lg:text-4xl' : 'text-lg md:text-xl lg:text-2xl line-clamp-2'}`}>{session.name}</h3>
-                    <div className="flex items-center gap-2 text-emerald-900/80 text-sm md:text-base font-medium">
-                      <Calendar className="w-5 h-5" />
-                      <span>{session.date}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-emerald-900/80 text-sm md:text-base font-medium">
-                      <MapPin className="w-5 h-5" />
-                      <span>{session.location}</span>
-                    </div>
+                  <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 flex flex-col gap-2 transform-gpu translate-y-2 group-hover:translate-y-0 transition-all duration-300 z-30" style={{ transform: "translateZ(50px)" }}>
+                    <h3 className={`font-bold text-emerald-900 leading-tight ${isActive ? 'text-xl md:text-3xl lg:text-4xl' : 'text-base md:text-xl line-clamp-2'}`}>{session.name}</h3>
+                    {isActive && (
+                      <motion.div 
+                        initial={{ opacity: 0 }} 
+                        animate={{ opacity: 1 }} 
+                        className="flex flex-col gap-1 md:gap-2"
+                      >
+                        <div className="flex items-center gap-2 text-emerald-900/80 text-xs md:text-sm lg:text-base font-medium">
+                          <Calendar className="w-4 h-4 md:w-5 md:h-5" />
+                          <span>{session.date}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-emerald-900/80 text-xs md:text-sm lg:text-base font-medium">
+                          <MapPin className="w-4 h-4 md:w-5 md:h-5" />
+                          <span>{session.location}</span>
+                        </div>
+                      </motion.div>
+                    )}
                   </div>
                 </motion.div>
               )
