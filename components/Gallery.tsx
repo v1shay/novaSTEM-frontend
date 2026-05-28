@@ -116,6 +116,8 @@ export function Gallery() {
     return () => { document.body.style.overflow = "" }
   }, [activeSession])
 
+  const [currentIndex, setCurrentIndex] = useState(2) // Start with the 3rd item (index 2) as center
+
   const displaySessions = [
     sessions[0],
     sessions[1],
@@ -123,6 +125,9 @@ export function Gallery() {
     sessions[2],
     sessions[3],
   ]
+
+  const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % displaySessions.length)
+  const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + displaySessions.length) % displaySessions.length)
 
   return (
     <div className="w-full flex flex-col items-center min-h-screen pt-32 pb-12 px-4 relative overflow-hidden">
@@ -135,38 +140,77 @@ export function Gallery() {
         Event Gallery
       </motion.h2>
 
-      <div className="w-full flex flex-row flex-nowrap gap-4 mb-8">
-        {displaySessions.map((session, idx) => (
-          <motion.div
-            key={session.id}
-            initial={{ opacity: 0, y: 30, z: -100, rotateX: 15 }}
-            whileInView={{ opacity: 1, y: 0, z: 0, rotateX: 0 }}
-            whileHover={{ scale: 1.03, rotateY: idx % 2 === 0 ? 5 : -5, rotateX: -5, z: 30, transition: { duration: 0.3 } }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 1, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
-            onClick={() => setActiveSession(session)}
-            className="flex-1 min-w-0 group relative h-[50vh] lg:h-[70vh] rounded-2xl overflow-hidden cursor-pointer shadow-xl border border-emerald-900/10 preserve-3d"
-          >
-            <Image
-              src={session.cover}
-              alt={session.name}
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute bottom-0 left-0 right-0 p-4 flex flex-col gap-1 transform-gpu translate-y-2 group-hover:translate-y-0 transition-all duration-300" style={{ transform: "translateZ(30px)" }}>
-              <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-emerald-900 leading-tight line-clamp-2">{session.name}</h3>
-              <div className="flex items-center gap-1.5 text-emerald-900/80 text-xs md:text-sm font-medium">
-                <Calendar className="w-3.5 h-3.5" />
-                <span>{session.date}</span>
-              </div>
-              <div className="flex items-center gap-1.5 text-emerald-900/80 text-xs md:text-sm font-medium">
-                <MapPin className="w-3.5 h-3.5" />
-                <span>{session.location}</span>
-              </div>
-            </div>
-          </motion.div>
-        ))}
+      <div className="relative w-full max-w-7xl flex items-center justify-center h-[60vh] lg:h-[75vh] mb-12">
+        {/* Navigation Buttons */}
+        <button 
+          onClick={prevSlide}
+          className="absolute left-0 z-50 p-4 bg-white/20 hover:bg-white/40 backdrop-blur-md rounded-full text-emerald-900 transition-all"
+        >
+          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" /></svg>
+        </button>
+        <button 
+          onClick={nextSlide}
+          className="absolute right-0 z-50 p-4 bg-white/20 hover:bg-white/40 backdrop-blur-md rounded-full text-emerald-900 transition-all"
+        >
+          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" /></svg>
+        </button>
+
+        <div className="flex items-center justify-center w-full h-full relative perspective-1000">
+          <AnimatePresence initial={false}>
+            {displaySessions.map((session, idx) => {
+              // Calculate relative position to the currentIndex
+              let position = idx - currentIndex
+              // Handle wrap-around for smooth looping
+              if (position > 2) position -= displaySessions.length
+              if (position < -2) position += displaySessions.length
+
+              const isActive = position === 0
+              const isVisible = Math.abs(position) <= 2
+
+              if (!isVisible) return null
+
+              return (
+                <motion.div
+                  key={session.id}
+                  initial={false}
+                  animate={{
+                    x: `${position * 32}%`,
+                    scale: isActive ? 1.1 : 0.85,
+                    zIndex: isActive ? 40 : 30 - Math.abs(position),
+                    opacity: isVisible ? 1 : 0,
+                    filter: isActive ? "blur(0px)" : "blur(4px) grayscale(30%)",
+                  }}
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  onClick={() => isActive ? setActiveSession(session) : setCurrentIndex(idx)}
+                  className={`absolute w-[30%] h-full rounded-3xl overflow-hidden cursor-pointer shadow-2xl border border-emerald-900/10 preserve-3d group ${!isActive ? 'pointer-events-auto' : ''}`}
+                >
+                  <Image
+                    src={session.cover}
+                    alt={session.name}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  {/* Tint overlay for non-active items */}
+                  {!isActive && (
+                    <div className="absolute inset-0 bg-emerald-950/20 z-10" />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300 z-20" />
+                  <div className="absolute bottom-0 left-0 right-0 p-8 flex flex-col gap-2 transform-gpu translate-y-2 group-hover:translate-y-0 transition-all duration-300 z-30" style={{ transform: "translateZ(50px)" }}>
+                    <h3 className={`font-bold text-emerald-900 leading-tight ${isActive ? 'text-2xl md:text-3xl lg:text-4xl' : 'text-lg md:text-xl lg:text-2xl line-clamp-2'}`}>{session.name}</h3>
+                    <div className="flex items-center gap-2 text-emerald-900/80 text-sm md:text-base font-medium">
+                      <Calendar className="w-5 h-5" />
+                      <span>{session.date}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-emerald-900/80 text-sm md:text-base font-medium">
+                      <MapPin className="w-5 h-5" />
+                      <span>{session.location}</span>
+                    </div>
+                  </div>
+                </motion.div>
+              )
+            })}
+          </AnimatePresence>
+        </div>
       </div>
 
       {/* Full Screen Gallery Modal */}
