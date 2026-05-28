@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState, useEffect, useCallback, useRef } from "react"
+import { motion, AnimatePresence, useInView } from "framer-motion"
 import Image from "next/image"
 import { X, Calendar, MapPin } from "lucide-react"
 
@@ -97,6 +97,8 @@ const sessions = [
 ]
 
 export function Gallery() {
+  const containerRef = useRef(null)
+  const isInView = useInView(containerRef, { amount: 0.3 })
   const [activeSession, setActiveSession] = useState<typeof sessions[0] | null>(null)
 
   const closeModal = useCallback(() => setActiveSession(null), [])
@@ -136,15 +138,15 @@ export function Gallery() {
   }, [displaySessions.length])
 
   useEffect(() => {
-    if (isHovered) return
+    if (isHovered || !isInView) return
     const timer = setInterval(() => {
       nextSlide()
     }, 1500) // Even faster rotation (1.5 seconds)
     return () => clearInterval(timer)
-  }, [nextSlide, isHovered])
+  }, [nextSlide, isHovered, isInView])
 
   return (
-    <div className="w-full flex flex-col items-center min-h-screen pt-32 pb-12 px-4 relative overflow-hidden">
+    <div ref={containerRef} className="w-full flex flex-col items-center min-h-screen pt-32 pb-12 px-4 relative overflow-hidden">
       <motion.h2
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
