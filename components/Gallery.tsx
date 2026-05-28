@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import { X, Calendar, MapPin } from "lucide-react"
@@ -74,23 +74,50 @@ const sessions = [
       "/4/BC118A87-C71D-4706-9BA5-533B0E43C86C_1_201_a.jpeg",
       "/4/D0CF1A97-B459-4428-B3D9-B0CDCF713AE9_1_201_a.jpeg"
     ]
+  },
+  {
+    id: 5,
+    name: "Slime Chemistry Lab",
+    date: "April 26, 2026",
+    location: "Sobrato Center for Nonprofits",
+    cover: "/5/081A3408-E723-4FC7-A14F-EF0AFF1FD8A8_1_105_c.jpeg",
+    images: [
+      "/5/081A3408-E723-4FC7-A14F-EF0AFF1FD8A8_1_105_c.jpeg",
+      "/5/0D8F0148-FC83-44F8-9621-CF971BCF62AE_1_105_c.jpeg",
+      "/5/396E9CCF-F695-4986-9541-F73E6099682F_1_105_c.jpeg",
+      "/5/4B4DD707-DA65-4978-840A-EF80BAE7AFEE_1_105_c.jpeg",
+      "/5/50367542-1448-4CCF-A3DB-24B030CCA78D_1_105_c.jpeg",
+      "/5/65AA2ED6-7FE4-42CE-ACE9-ECCC33AB4BE7_1_105_c.jpeg",
+      "/5/9004E6CC-C518-4C20-B43B-A6DF546A1A48_1_105_c.jpeg",
+      "/5/940AC2C9-E505-4E78-8292-D6AB7942584E_1_105_c.jpeg",
+      "/5/A95A7113-1BBD-443C-8795-34FE67515F8A_1_105_c.jpeg",
+      "/5/BC33030E-D8E0-4607-B5FA-1DFFE74D2927_1_105_c.jpeg"
+    ]
   }
 ]
 
 export function Gallery() {
   const [activeSession, setActiveSession] = useState<typeof sessions[0] | null>(null)
 
+  const closeModal = useCallback(() => setActiveSession(null), [])
+
+  // Handle Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeModal()
+    }
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [closeModal])
+
   // Prevent background scrolling when modal is open
   useEffect(() => {
-    if (activeSession) {
-      document.body.style.overflow = "hidden"
-    } else {
-      document.body.style.overflow = ""
-    }
-    return () => {
-      document.body.style.overflow = ""
-    }
+    document.body.style.overflow = activeSession ? "hidden" : ""
+    return () => { document.body.style.overflow = "" }
   }, [activeSession])
+
+  const topRow = sessions.slice(0, 4)
+  const bottomRow = sessions.slice(4)
 
   return (
     <div className="w-full flex flex-col items-center min-h-screen pt-32 pb-12 px-6 md:px-12 relative overflow-hidden">
@@ -103,8 +130,9 @@ export function Gallery() {
         Event Gallery
       </motion.h2>
 
-      <div className="max-w-7xl w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 flex-1">
-        {sessions.map((session, idx) => (
+      {/* Top row: first 4 cards */}
+      <div className="max-w-7xl w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+        {topRow.map((session, idx) => (
           <motion.div
             key={session.id}
             initial={{ opacity: 0, y: 30, z: -100, rotateX: 15 }}
@@ -122,7 +150,6 @@ export function Gallery() {
               className="object-cover transition-transform duration-700 group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
-            
             <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col gap-2 transform-gpu translate-y-2 group-hover:translate-y-0 transition-all duration-300" style={{ transform: "translateZ(30px)" }}>
               <h3 className="text-2xl md:text-3xl font-bold text-emerald-900 leading-tight">{session.name}</h3>
               <div className="flex items-center gap-2 text-emerald-900/80 text-sm md:text-base font-medium">
@@ -138,6 +165,43 @@ export function Gallery() {
         ))}
       </div>
 
+      {/* Bottom row: 5th card centered */}
+      {bottomRow.length > 0 && (
+        <div className="max-w-7xl w-full flex justify-center">
+          {bottomRow.map((session, idx) => (
+            <motion.div
+              key={session.id}
+              initial={{ opacity: 0, y: 30, z: -100, rotateX: 15 }}
+              whileInView={{ opacity: 1, y: 0, z: 0, rotateX: 0 }}
+              whileHover={{ scale: 1.03, rotateY: 0, rotateX: -5, z: 30, transition: { duration: 0.3 } }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 1, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              onClick={() => setActiveSession(session)}
+              className="group relative h-[60vh] lg:h-[70vh] w-full lg:w-[calc(25%-1.5rem)] rounded-3xl overflow-hidden cursor-pointer shadow-xl border border-emerald-900/10 preserve-3d"
+            >
+              <Image
+                src={session.cover}
+                alt={session.name}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col gap-2 transform-gpu translate-y-2 group-hover:translate-y-0 transition-all duration-300" style={{ transform: "translateZ(30px)" }}>
+                <h3 className="text-2xl md:text-3xl font-bold text-emerald-900 leading-tight">{session.name}</h3>
+                <div className="flex items-center gap-2 text-emerald-900/80 text-sm md:text-base font-medium">
+                  <Calendar className="w-4 h-4" />
+                  <span>{session.date}</span>
+                </div>
+                <div className="flex items-center gap-2 text-emerald-900/80 text-sm md:text-base font-medium">
+                  <MapPin className="w-4 h-4" />
+                  <span>{session.location}</span>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      )}
+
       {/* Full Screen Gallery Modal */}
       <AnimatePresence>
         {activeSession && (
@@ -145,10 +209,11 @@ export function Gallery() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            onClick={closeModal}
             className="fixed inset-0 z-[100] flex flex-col bg-white/80 backdrop-blur-md overflow-y-auto"
           >
             {/* Modal Header */}
-            <div className="sticky top-0 z-[110] flex justify-between items-start p-6 bg-gradient-to-b from-white/95 to-transparent">
+            <div className="sticky top-0 z-[110] flex justify-between items-start p-6 bg-gradient-to-b from-white/95 to-transparent" onClick={(e) => e.stopPropagation()}>
               <div className="flex flex-col">
                 <h2 className="text-3xl md:text-5xl font-black text-emerald-900 tracking-tight uppercase">{activeSession.name}</h2>
                 <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6 mt-2 text-emerald-900/80 text-sm md:text-base font-bold">
@@ -157,15 +222,15 @@ export function Gallery() {
                 </div>
               </div>
               <button
-                onClick={() => setActiveSession(null)}
-                className="p-4 bg-emerald-900/10 hover:bg-emerald-900/20 hover:scale-110 rounded-full transition-all text-emerald-900 backdrop-blur-md shadow-lg fixed top-6 right-6"
+                onClick={closeModal}
+                className="p-4 bg-emerald-900/10 hover:bg-emerald-900/20 hover:scale-110 rounded-full transition-all text-emerald-900 backdrop-blur-md shadow-lg"
               >
                 <X className="w-8 h-8" />
               </button>
             </div>
 
             {/* Masonry Image Grid */}
-            <div className="p-6 md:p-12 columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6 max-w-7xl mx-auto w-full pt-20">
+            <div className="p-6 md:p-12 columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6 max-w-7xl mx-auto w-full pt-20" onClick={(e) => e.stopPropagation()}>
               {activeSession.images.map((src, i) => (
                 <motion.div
                   key={i}
