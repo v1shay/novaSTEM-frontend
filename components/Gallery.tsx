@@ -116,11 +116,16 @@ export function Gallery() {
     return () => { document.body.style.overflow = "" }
   }, [activeSession])
 
-  const topRow = sessions.slice(0, 4)
-  const bottomRow = sessions.slice(4)
+  const displaySessions = [
+    sessions[0],
+    sessions[1],
+    sessions[4],
+    sessions[2],
+    sessions[3],
+  ]
 
   return (
-    <div className="w-full flex flex-col items-center min-h-screen pt-32 pb-12 px-6 md:px-12 relative overflow-hidden">
+    <div className="w-full flex flex-col items-center min-h-screen pt-32 pb-12 px-4 relative overflow-hidden">
       <motion.h2
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -130,9 +135,8 @@ export function Gallery() {
         Event Gallery
       </motion.h2>
 
-      {/* Top row: first 4 cards */}
-      <div className="max-w-7xl w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-        {topRow.map((session, idx) => (
+      <div className="w-full flex flex-row flex-nowrap gap-4 mb-8">
+        {displaySessions.map((session, idx) => (
           <motion.div
             key={session.id}
             initial={{ opacity: 0, y: 30, z: -100, rotateX: 15 }}
@@ -141,7 +145,7 @@ export function Gallery() {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 1, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
             onClick={() => setActiveSession(session)}
-            className="group relative h-[60vh] lg:h-[70vh] rounded-3xl overflow-hidden cursor-pointer shadow-xl border border-emerald-900/10 preserve-3d"
+            className="flex-1 min-w-0 group relative h-[50vh] lg:h-[70vh] rounded-2xl overflow-hidden cursor-pointer shadow-xl border border-emerald-900/10 preserve-3d"
           >
             <Image
               src={session.cover}
@@ -150,57 +154,20 @@ export function Gallery() {
               className="object-cover transition-transform duration-700 group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col gap-2 transform-gpu translate-y-2 group-hover:translate-y-0 transition-all duration-300" style={{ transform: "translateZ(30px)" }}>
-              <h3 className="text-2xl md:text-3xl font-bold text-emerald-900 leading-tight">{session.name}</h3>
-              <div className="flex items-center gap-2 text-emerald-900/80 text-sm md:text-base font-medium">
-                <Calendar className="w-4 h-4" />
+            <div className="absolute bottom-0 left-0 right-0 p-4 flex flex-col gap-1 transform-gpu translate-y-2 group-hover:translate-y-0 transition-all duration-300" style={{ transform: "translateZ(30px)" }}>
+              <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-emerald-900 leading-tight line-clamp-2">{session.name}</h3>
+              <div className="flex items-center gap-1.5 text-emerald-900/80 text-xs md:text-sm font-medium">
+                <Calendar className="w-3.5 h-3.5" />
                 <span>{session.date}</span>
               </div>
-              <div className="flex items-center gap-2 text-emerald-900/80 text-sm md:text-base font-medium">
-                <MapPin className="w-4 h-4" />
+              <div className="flex items-center gap-1.5 text-emerald-900/80 text-xs md:text-sm font-medium">
+                <MapPin className="w-3.5 h-3.5" />
                 <span>{session.location}</span>
               </div>
             </div>
           </motion.div>
         ))}
       </div>
-
-      {/* Bottom row: 5th card centered */}
-      {bottomRow.length > 0 && (
-        <div className="max-w-7xl w-full flex justify-center">
-          {bottomRow.map((session, idx) => (
-            <motion.div
-              key={session.id}
-              initial={{ opacity: 0, y: 30, z: -100, rotateX: 15 }}
-              whileInView={{ opacity: 1, y: 0, z: 0, rotateX: 0 }}
-              whileHover={{ scale: 1.03, rotateY: 0, rotateX: -5, z: 30, transition: { duration: 0.3 } }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 1, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              onClick={() => setActiveSession(session)}
-              className="group relative h-[60vh] lg:h-[70vh] w-full lg:w-[calc(25%-1.5rem)] rounded-3xl overflow-hidden cursor-pointer shadow-xl border border-emerald-900/10 preserve-3d"
-            >
-              <Image
-                src={session.cover}
-                alt={session.name}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col gap-2 transform-gpu translate-y-2 group-hover:translate-y-0 transition-all duration-300" style={{ transform: "translateZ(30px)" }}>
-                <h3 className="text-2xl md:text-3xl font-bold text-emerald-900 leading-tight">{session.name}</h3>
-                <div className="flex items-center gap-2 text-emerald-900/80 text-sm md:text-base font-medium">
-                  <Calendar className="w-4 h-4" />
-                  <span>{session.date}</span>
-                </div>
-                <div className="flex items-center gap-2 text-emerald-900/80 text-sm md:text-base font-medium">
-                  <MapPin className="w-4 h-4" />
-                  <span>{session.location}</span>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      )}
 
       {/* Full Screen Gallery Modal */}
       <AnimatePresence>
