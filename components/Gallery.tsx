@@ -139,7 +139,7 @@ export function Gallery() {
     if (isHovered) return
     const timer = setInterval(() => {
       nextSlide()
-    }, 2500) // Faster rotation (2.5 seconds)
+    }, 1500) // Even faster rotation (1.5 seconds)
     return () => clearInterval(timer)
   }, [nextSlide, isHovered])
 
