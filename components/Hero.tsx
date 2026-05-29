@@ -6,8 +6,9 @@ import Image from "next/image"
 const partners = [
   { src: "/partners/partner-logo-2022.png", alt: "Partner 1" },
   { src: "/partners/image-removebg-preview.png", alt: "Partner 2" },
-  { src: "/partners/logo.png", alt: "Partner 3" },
   { src: "/how/image.png", alt: "Partner 4" },
+  { src: "/partners/ChatGPT_Image_May_28__2026__05_02_16_PM-removebg-preview.png", alt: "Partner 3" },
+
 ]
 
 export function Hero() {
